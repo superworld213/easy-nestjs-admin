@@ -1,8 +1,0 @@
-export declare enum PolicyType {
-    ALL = "ALL",
-    SELF = "SELF",
-    DEPT_SELF = "DEPT_SELF",
-    DEPT_TREE = "DEPT_TREE",
-    CUSTOM_DEPT = "CUSTOM_DEPT",
-    CUSTOM_FUNC = "CUSTOM_FUNC"
-}
