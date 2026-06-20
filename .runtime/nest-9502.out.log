@@ -1,0 +1,72 @@
+[32m[Nest] 17988  - [39m2026/06/20 00:30:41 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +91ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmCoreModule dependencies initialized[39m[38;5;3m +80ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mTypeOrmModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mDatabaseModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAuthModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mLogstashModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAttachmentModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mPermissionModule dependencies initialized[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +23ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/favicon.ico, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAuthController {/admin/passport}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/passport/login, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/passport/logout, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/passport/getInfo, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/passport/refresh, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPermissionController {/admin/permission}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/permission/menus, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/permission/roles, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/permission/update, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUserController {/admin/user}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user/list, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user/info, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user/password, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user/:id/roles, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user/:id/roles, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mRoleController {/admin/role}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/role/list, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/role, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/role/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/role, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/role/:id/permissions, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/role/:id/permissions, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mMenuController {/admin/menu}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/menu/list, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/menu, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/menu/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/menu, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mDepartmentController {/admin/department}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/department/list, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/department, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/department/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/department, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mPositionController {/admin/position}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/position/list, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/position, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/position/:id/data_permission, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/position/:id, PUT} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/position, DELETE} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mLeaderController {/admin/leader}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/leader/list, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/leader, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/leader/:id, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/leader, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAttachmentController {/admin/attachment}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/attachment/list, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/attachment/upload, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/attachment/:id, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUserLoginLogController {/admin/user-login-log}:[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user-login-log/list, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user-login-log, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mUserOperationLogController {/admin/user-operation-log}:[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user-operation-log/list, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/admin/user-operation-log, DELETE} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[DatabaseSeederService] [39m[32mDatabase seed check complete[39m
+[32m[Nest] 17988  - [39m2026/06/20 00:30:42 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +1ms[39m
