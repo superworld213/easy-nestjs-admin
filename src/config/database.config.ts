@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { AdminUserEntity } from '../database/entities/admin-user.entity';
+import { AuthTokenEntity } from '../database/entities/auth-token.entity';
 import { AttachmentEntity } from '../database/entities/attachment.entity';
 import { DataPermissionPolicyEntity } from '../database/entities/data-permission-policy.entity';
 import { DepartmentEntity } from '../database/entities/department.entity';
@@ -31,6 +32,7 @@ if (existsSync(serverEnv)) {
 
 export const databaseEntities = [
   AdminUserEntity,
+  AuthTokenEntity,
   AttachmentEntity,
   DataPermissionPolicyEntity,
   DepartmentEntity,
@@ -57,7 +59,10 @@ export function getDatabaseOptions(): TypeOrmModuleOptions {
     charset: process.env.DB_CHARSET ?? 'utf8mb4',
     timezone: '+08:00',
     entities: databaseEntities,
-    synchronize: (process.env.DB_SYNCHRONIZE ?? 'true') === 'true',
+    migrations: [join(__dirname, '..', 'database', 'migrations', '*.{ts,js}')],
+    migrationsTableName: 'typeorm_migrations',
+    migrationsRun: (process.env.DB_MIGRATIONS_RUN ?? 'false') === 'true',
+    synchronize: (process.env.DB_SYNCHRONIZE ?? 'false') === 'true',
     logging: (process.env.DB_LOGGING ?? 'false') === 'true',
   };
 }

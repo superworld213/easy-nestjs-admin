@@ -120,9 +120,3 @@ export interface UserOperationLog extends BaseRecord {
   service_name: string;
   ip: string;
 }
-
-export interface TokenSession {
-  userId: number;
-  expiresAt: number;
-  tokenType: 'access' | 'refresh';
-}

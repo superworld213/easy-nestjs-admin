@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { compare } from 'bcryptjs';
-import { randomUUID } from 'node:crypto';
-import { Repository } from 'typeorm';
+import { createHash, randomUUID } from 'node:crypto';
+import { IsNull, LessThanOrEqual, MoreThan, Repository } from 'typeorm';
 
-import { AdminUser, TokenSession } from '../../common/types/entities';
+import { AdminUser } from '../../common/types/entities';
 import { AdminUserEntity } from '../../database/entities/admin-user.entity';
+import { AuthTokenEntity, AuthTokenType } from '../../database/entities/auth-token.entity';
 import { UserLoginLogEntity } from '../../database/entities/user-login-log.entity';
 
 export interface PassportTokens {
@@ -18,12 +19,12 @@ export interface PassportTokens {
 export class AuthService {
   private readonly accessTokenTtl = Number(process.env.ACCESS_TOKEN_TTL_SECONDS ?? 7200);
   private readonly refreshTokenTtl = Number(process.env.REFRESH_TOKEN_TTL_SECONDS ?? 604800);
-  private readonly accessTokens = new Map<string, TokenSession>();
-  private readonly refreshTokens = new Map<string, TokenSession>();
 
   constructor(
     @InjectRepository(AdminUserEntity)
     private readonly userRepo: Repository<AdminUserEntity>,
+    @InjectRepository(AuthTokenEntity)
+    private readonly tokenRepo: Repository<AuthTokenEntity>,
     @InjectRepository(UserLoginLogEntity)
     private readonly loginLogRepo: Repository<UserLoginLogEntity>,
   ) {}
@@ -80,40 +81,81 @@ export class AuthService {
       }),
     );
 
+    void this.cleanupExpiredTokens().catch(() => undefined);
     return this.issueTokens(user.id);
   }
 
-  logout(accessToken: string | undefined): void {
-    if (accessToken) {
-      this.accessTokens.delete(accessToken);
+  async logout(accessToken: string | undefined): Promise<void> {
+    if (!accessToken) {
+      return;
     }
+
+    const session = await this.tokenRepo.findOne({
+      where: {
+        token_hash: this.hashToken(accessToken),
+        token_type: 'access',
+      },
+    });
+
+    if (session) {
+      await this.revokeSession(session.session_id);
+      return;
+    }
+
+    await this.tokenRepo.update(
+      {
+        token_hash: this.hashToken(accessToken),
+        revoked_at: IsNull(),
+      },
+      { revoked_at: new Date() },
+    );
   }
 
-  refresh(refreshToken: string | undefined): PassportTokens {
+  async refresh(refreshToken: string | undefined): Promise<PassportTokens> {
     if (!refreshToken) {
       throw new UnauthorizedException('Refresh token expired');
     }
 
-    const session = this.refreshTokens.get(refreshToken);
-    if (!session || session.expiresAt <= Date.now()) {
+    const session = await this.tokenRepo.findOne({
+      where: {
+        token_hash: this.hashToken(refreshToken),
+        token_type: 'refresh',
+        revoked_at: IsNull(),
+        expires_at: MoreThan(new Date()),
+      },
+    });
+    if (!session) {
       throw new UnauthorizedException('Refresh token expired');
     }
 
-    this.refreshTokens.delete(refreshToken);
-    return this.issueTokens(session.userId);
+    await this.revokeSession(session.session_id);
+    return this.issueTokens(session.user_id);
   }
 
   async resolveAccessToken(accessToken: string | undefined): Promise<AdminUser | undefined> {
-    const session = accessToken ? this.accessTokens.get(accessToken) : undefined;
-    if (!session || session.expiresAt <= Date.now()) {
+    if (!accessToken) {
       return undefined;
     }
 
-    const user = await this.userRepo.findOneBy({ id: session.userId });
+    const session = await this.tokenRepo.findOne({
+      where: {
+        token_hash: this.hashToken(accessToken),
+        token_type: 'access',
+        revoked_at: IsNull(),
+        expires_at: MoreThan(new Date()),
+      },
+    });
+    if (!session) {
+      return undefined;
+    }
+
+    const user = await this.userRepo.findOneBy({ id: session.user_id });
     if (!user || user.status === 2) {
+      await this.revokeSession(session.session_id);
       return undefined;
     }
 
+    void this.tokenRepo.update(session.id, { last_used_at: new Date() }).catch(() => undefined);
     return user as unknown as AdminUser;
   }
 
@@ -143,21 +185,28 @@ export class AuthService {
     return compare(password, hash.replace(/^\$2y\$/, '$2b$'));
   }
 
-  private issueTokens(userId: number): PassportTokens {
-    const accessToken = this.createToken('access', userId);
-    const refreshToken = this.createToken('refresh', userId);
+  private async issueTokens(userId: number): Promise<PassportTokens> {
+    const sessionId = randomUUID();
+    const accessToken = this.createToken('access', userId, sessionId);
+    const refreshToken = this.createToken('refresh', userId, sessionId);
     const now = Date.now();
 
-    this.accessTokens.set(accessToken, {
-      userId,
-      tokenType: 'access',
-      expiresAt: now + this.accessTokenTtl * 1000,
-    });
-    this.refreshTokens.set(refreshToken, {
-      userId,
-      tokenType: 'refresh',
-      expiresAt: now + this.refreshTokenTtl * 1000,
-    });
+    await this.tokenRepo.save([
+      this.tokenRepo.create({
+        user_id: userId,
+        session_id: sessionId,
+        token_hash: this.hashToken(accessToken),
+        token_type: 'access',
+        expires_at: new Date(now + this.accessTokenTtl * 1000),
+      }),
+      this.tokenRepo.create({
+        user_id: userId,
+        session_id: sessionId,
+        token_hash: this.hashToken(refreshToken),
+        token_type: 'refresh',
+        expires_at: new Date(now + this.refreshTokenTtl * 1000),
+      }),
+    ]);
 
     return {
       access_token: accessToken,
@@ -166,15 +215,34 @@ export class AuthService {
     };
   }
 
-  private createToken(type: 'access' | 'refresh', userId: number): string {
+  private createToken(type: AuthTokenType, userId: number, sessionId: string): string {
     const payload = Buffer.from(
       JSON.stringify({
         sub: userId,
         typ: type,
+        sid: sessionId,
         iat: Math.floor(Date.now() / 1000),
       }),
     ).toString('base64url');
 
     return `mineadmin.${payload}.${randomUUID()}`;
+  }
+
+  private hashToken(token: string): string {
+    return createHash('sha256').update(token).digest('hex');
+  }
+
+  private async revokeSession(sessionId: string): Promise<void> {
+    await this.tokenRepo.update(
+      {
+        session_id: sessionId,
+        revoked_at: IsNull(),
+      },
+      { revoked_at: new Date() },
+    );
+  }
+
+  private async cleanupExpiredTokens(): Promise<void> {
+    await this.tokenRepo.delete({ expires_at: LessThanOrEqual(new Date()) });
   }
 }

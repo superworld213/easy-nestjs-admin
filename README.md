@@ -14,6 +14,7 @@ pnpm install
 pnpm start:dev
 pnpm build
 pnpm typecheck
+pnpm migration:run
 ```
 
 The server listens on `http://127.0.0.1:9502` by default, avoiding the original
@@ -29,15 +30,23 @@ pnpm dev --host 127.0.0.1
 
 ## Database
 
-Start the Docker MySQL service from the project root:
+The backend now defaults to migrations instead of TypeORM schema sync:
+
+```text
+DB_SYNCHRONIZE=false
+DB_MIGRATIONS_RUN=true
+```
+
+For local development, start Docker MySQL from the project root:
 
 ```bash
 docker compose up -d mysql
 ```
 
-Then run the Nest server from this directory:
+Then run migrations and start the Nest server from this directory:
 
 ```bash
+pnpm migration:run
 pnpm start:dev
 ```
 
@@ -52,13 +61,20 @@ DB_PASSWORD=root
 ```
 
 If the Nest server also runs inside Docker Compose, set `DB_HOST=mysql`.
-`DB_SYNCHRONIZE=true` is enabled by default for this development refactor so an
-empty Docker database can bootstrap itself. Turn it off before production and
-replace it with real migrations.
+
+The project root also defines a Docker Compose `nest` service:
+
+```bash
+docker compose up -d mysql redis nest
+```
+
+That container uses `DB_HOST=mysql` and `DB_MIGRATIONS_RUN=true`, so a fresh
+Docker database can bootstrap itself without enabling `DB_SYNCHRONIZE`.
 
 ## Implemented Backend Scope
 
 - Login, refresh, logout, current user info
+- Database-backed access/refresh token sessions with refresh rotation
 - Menu, role, user, department, position, leader CRUD endpoints
 - Role/menu and user/role permission relationships
 - Backend permission-code checks for `@Permission(...)` routes
@@ -85,3 +101,10 @@ UPLOAD_MAX_BYTES=20971520
 `storage/uploads` is ignored by Git. Files are served from `/uploads/*`; the
 returned attachment URL uses `UPLOAD_PUBLIC_BASE_URL` so the unchanged frontend
 can preview files while running on port `2888`.
+
+## Auth Sessions
+
+Access and refresh tokens are opaque random tokens. The API returns the plaintext
+token once, while the database stores only a SHA-256 token hash in `auth_token`.
+Refreshing a token revokes the old session and creates a new access/refresh
+pair. Logging out revokes the whole token session.

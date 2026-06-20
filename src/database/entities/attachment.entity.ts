@@ -13,7 +13,7 @@ export class AttachmentEntity extends AuditColumns {
   @Column({ type: 'varchar', length: 255, nullable: true })
   origin_name?: string | null;
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
+  @Column({ type: 'varchar', length: 100, nullable: true })
   object_name?: string | null;
 
   @Index({ unique: true })

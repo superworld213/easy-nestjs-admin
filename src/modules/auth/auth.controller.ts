@@ -25,8 +25,8 @@ export class AuthController {
 
   @ApiBearerAuth()
   @Post('logout')
-  logout(@Headers('authorization') authorization?: string): [] {
-    this.authService.logout(this.authService.getBearerToken(authorization));
+  async logout(@Headers('authorization') authorization?: string): Promise<[]> {
+    await this.authService.logout(this.authService.getBearerToken(authorization));
     return [];
   }
 
@@ -50,7 +50,7 @@ export class AuthController {
   @Public()
   @ApiBearerAuth()
   @Post('refresh')
-  refresh(@Headers('authorization') authorization?: string): PassportTokens {
+  refresh(@Headers('authorization') authorization?: string): Promise<PassportTokens> {
     return this.authService.refresh(this.authService.getBearerToken(authorization));
   }
 }

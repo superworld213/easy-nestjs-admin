@@ -3,13 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "description": "NestJS backend refactor for MineAdmin without plugin runtime.",
+  "packageManager": "pnpm@10.15.0",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "migration:run": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:run",
+    "migration:revert": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:revert",
+    "migration:show": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:show",
+    "migration:generate": "typeorm-ts-node-commonjs -d src/database/data-source.ts migration:generate"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
