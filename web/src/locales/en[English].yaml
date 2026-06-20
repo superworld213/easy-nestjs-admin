@@ -121,7 +121,6 @@ menu:
   uc:index: Home
   dashboard:analysis: Analysis Page
   pageError: The page error
-  appstore: App store
   dashboard:workbench: Workbench
   dashboard:report: Statistics reports
   uc:logs: Logs

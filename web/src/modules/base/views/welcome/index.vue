@@ -146,11 +146,6 @@ useTable('table').then((table: MaTableExpose) => {
               </el-link>
             </li>
             <li>
-              应用市场：<el-link target="_blank" href="https://www.mineadmin.com/store">
-                https://www.mineadmin.com/store
-              </el-link>
-            </li>
-            <li>
               QQ交流群：<el-link target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=Uq4VW1H9jtDhEKsUb3hfjHraiSG80FI4&jump_from=webapi&authKey=bpaCvnQ65RpLdyQx8m57iQNc9OtgJgyIjrcG3qDrJZhnL4QdqzDLLQS8fx5jkevE">
                 150105478，点击加入
               </el-link>
