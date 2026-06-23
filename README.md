@@ -5,6 +5,24 @@ backend in `server/`.
 
 The plugin runtime is intentionally not included.
 
+## Environment
+
+Create the backend environment file before starting Docker or the Nest server:
+
+```powershell
+Copy-Item server/.env.example server/.env
+```
+
+Or on bash-compatible shells:
+
+```bash
+cp server/.env.example server/.env
+```
+
+`server/.env` is ignored by Git and should be adjusted locally. The default
+`DB_HOST=127.0.0.1` works when running Nest directly on the host; Docker Compose
+overrides the `nest` container to use `DB_HOST=mysql`.
+
 ## Structure
 
 ```text
@@ -17,7 +35,7 @@ docker-compose.yml
 ## Start Backend Services
 
 ```bash
-docker compose up -d mysql redis nest
+docker compose --env-file server/.env up -d mysql redis nest
 ```
 
 The Nest API listens on:

@@ -19,6 +19,24 @@ pnpm migration:run
 
 The server listens on `http://127.0.0.1:9502` by default.
 
+## Environment
+
+Create a local environment file from the example before starting the server:
+
+```bash
+cp .env.example .env
+```
+
+On PowerShell from the project root:
+
+```powershell
+Copy-Item server/.env.example server/.env
+```
+
+`server/.env` is ignored by Git. Keep `DB_HOST=127.0.0.1` when the Nest server
+runs on the host. Docker Compose reads the same file and overrides only the
+`nest` container database host to `mysql`.
+
 The frontend development proxy in `../web/.env.development` points to
 `http://127.0.0.1:9502`, so the existing frontend can be started normally:
 
@@ -64,11 +82,12 @@ If the Nest server also runs inside Docker Compose, set `DB_HOST=mysql`.
 The project root also defines a Docker Compose `nest` service:
 
 ```bash
-docker compose up -d mysql redis nest
+docker compose --env-file server/.env up -d mysql redis nest
 ```
 
-That container uses `DB_HOST=mysql` and `DB_MIGRATIONS_RUN=true`, so a fresh
-Docker database can bootstrap itself without enabling `DB_SYNCHRONIZE`.
+That container uses the values in `server/.env`, overrides `DB_HOST=mysql`, and
+keeps `DB_MIGRATIONS_RUN=true`, so a fresh Docker database can bootstrap itself
+without enabling `DB_SYNCHRONIZE`.
 
 ## Implemented Backend Scope
 

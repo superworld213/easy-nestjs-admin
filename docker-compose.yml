@@ -32,13 +32,13 @@ services:
       - "3306:3306"
     command: --default-authentication-plugin=mysql_native_password
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mineadmin
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+      MYSQL_DATABASE: ${DB_DATABASE:-mineadmin}
       MYSQL_CHARACTER_SET_SERVER: utf8mb4
       MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
       TZ: Asia/Shanghai
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -uroot -p$${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -52,35 +52,19 @@ services:
       redis:
         condition: service_started
     ports:
-      - "9502:9502"
+      - "${PORT:-9502}:${PORT:-9502}"
     volumes:
       - ./storage/uploads:/app/storage/uploads
+    env_file:
+      - ./server/.env
     environment:
       TZ: Asia/Shanghai
-      PORT: 9502
       DB_HOST: mysql
-      DB_PORT: 3306
-      DB_DATABASE: mineadmin
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      DB_CHARSET: utf8mb4
-      DB_SYNCHRONIZE: "false"
-      DB_MIGRATIONS_RUN: "true"
-      DB_LOGGING: "false"
-      DB_SEED: "true"
-      ACCESS_TOKEN_TTL_SECONDS: 7200
-      REFRESH_TOKEN_TTL_SECONDS: 604800
-      UPLOAD_DIR: ../storage/uploads
-      UPLOAD_PUBLIC_BASE_URL: http://127.0.0.1:9502
-      UPLOAD_MAX_BYTES: 20971520
-      LOG_READ_REQUESTS: "false"
     healthcheck:
       test:
         [
-          "CMD",
-          "node",
-          "-e",
-          "fetch('http://127.0.0.1:9502/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+          "CMD-SHELL",
+          "node -e \"fetch('http://127.0.0.1:' + (process.env.PORT || 9502) + '/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""
         ]
       interval: 10s
       timeout: 5s
